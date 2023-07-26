@@ -2,24 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace JsonViewer {
+using Utils;
+
+namespace ScrollViewer {
+	
 	public class ScrollController : MonoBehaviour {
 		[SerializeField]
 		GameObject ScrollViewGo;
 		[SerializeField]
 		private ScrollView scrollView;
 		[SerializeField]
-		private GUIController gui;
-		private ScrollMod scrollMod;
-		
+		private Gui gui;
+		private ScrollDB scrollDB;
+		[SerializeField]
+		private const string url = "https://drive.google.com/uc?export=download&id=1MWptUq7lb78W-8dI6uQ7mbNEuKTJRVZB";
+
 		void Start() {
 			ScrollViewGo.SetActive(false);
-			JSONLoader loader = new JSONLoader((root) => {
+			JSONLoader loader = new JSONLoader(url, (root) => {
 				ScrollViewGo.SetActive(true);
-				scrollMod = new ScrollMod(root);
+				scrollDB = new ScrollDB(root);
 				scrollView.OnScrollChanged += ScrollControl_OnValueCangeg;
 				scrollView.OnScrollClicked += ScrollView_OnScrollClicked;
-				scrollView.UpdateRecords(scrollMod.GetRecords(0, scrollView.ContentRecordCount));
+				scrollView.UpdateRecords(scrollDB.GetRecords(0, scrollView.ContentRecordCount));
 			});
 		}
 
@@ -30,13 +35,14 @@ namespace JsonViewer {
 		}
 
 		private void ScrollControl_OnValueCangeg(int index) {			
-			scrollView.UpdateRecords(scrollMod.GetRecords(index, scrollView.ContentRecordCount));
+			scrollView.UpdateRecords(scrollDB.GetRecords(index, scrollView.ContentRecordCount));
 		}
 		private void OnDestroy() {
 			scrollView.OnScrollChanged -= ScrollControl_OnValueCangeg;
 			scrollView.OnScrollClicked -= ScrollView_OnScrollClicked;
-			scrollMod.Dispose();
-			HttpRequest.Clear();
+			scrollDB.Dispose();
+			RequestHelper.Dispose();
+			
 		}
 	}
 }

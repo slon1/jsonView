@@ -1,13 +1,12 @@
 using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-namespace JsonViewer {
-	public class ScrollMod : IDisposable {
+using System.Linq;
+
+namespace ScrollViewer {
+	public class ScrollDB : IDisposable {
 		
 		private Dictionary<int, JsonData> records = new Dictionary<int, JsonData>();		
-		public ScrollMod(JsonRoot root) {			
+		public ScrollDB(JsonRoot root) {			
 			for (int i = 0; i < root.Root.Count; i++) {
 				records.Add(i, root.Root[i]);
 			}

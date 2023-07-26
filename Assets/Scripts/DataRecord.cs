@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-namespace JsonViewer {
+namespace ScrollViewer {
 	public class DataRecord : MonoBehaviour {
         
         [SerializeField]

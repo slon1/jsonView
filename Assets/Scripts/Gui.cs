@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace JsonViewer {
-	public class GUIController : MonoBehaviour {
+namespace ScrollViewer {
+	public class Gui : MonoBehaviour {
         [SerializeField]
         private GameObject go;
         [SerializeField]
